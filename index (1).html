@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple ID Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body { background-color: #0f121d; color: white; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .card { background-color: #161b29; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; text-align: center; position: relative; }
+        .logo { color: #ff3b30; font-size: 24px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .field-group { margin-bottom: 15px; text-align: right; }
+        label { font-size: 12px; color: #a0a0a0; display: block; margin-bottom: 5px; }
+        .input-container { display: flex; background: #1c2237; border-radius: 8px; overflow: hidden; }
+        .copy-btn { background: #d73434; border: none; padding: 10px; cursor: pointer; color: white; width: 45px; }
+        input { background: transparent; border: none; color: white; padding: 10px; width: 100%; outline: none; font-size: 14px; }
+        .action-btn { background: #ff3b30; border: none; color: white; padding: 12px; width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer; font-weight: bold; }
+        .edit-icon { position: absolute; top: 15px; left: 15px; cursor: pointer; font-size: 12px; }
+    </style>
+</head>
+<body id="capture">
+    <div class="card">
+        <div class="edit-icon" onclick="toggleEdit()">✏️ تعديل</div>
+        <div class="logo">🍎 Apple ID</div>
+
+        <div class="field-group">
+            <label>بريد إلكتروني / Email</label>
+            <div class="input-container">
+                <button class="copy-btn" onclick="copyText('email')">📋</button>
+                <input type="text" id="email" value="stefanoalfarouqmy4@icloud.com" readonly>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>كلمة المرور / Password</label>
+            <div class="input-container">
+                <button class="copy-btn" onclick="copyText('pass')">📋</button>
+                <input type="text" id="pass" value="L@?z44I#qvZc@" readonly>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>الاسم الأول / First Name</label>
+            <div class="input-container">
+                <button class="copy-btn" onclick="copyText('fname')">📋</button>
+                <input type="text" id="fname" value="Stefano" readonly>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>اسم العائلة / Last Name</label>
+            <div class="input-container">
+                <button class="copy-btn" onclick="copyText('lname')">📋</button>
+                <input type="text" id="lname" value="Al-Farouq" readonly>
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="saveAsImage()">📸 حفظ كصورة</button>
+    </div>
+
+    <script>
+        function copyText(id) {
+            const copyText = document.getElementById(id);
+            navigator.clipboard.writeText(copyText.value);
+            alert("تم النسخ: " + copyText.value);
+        }
+
+        function toggleEdit() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.readOnly = !input.readOnly;
+                input.style.border = input.readOnly ? "none" : "1px solid #ff3b30";
+            });
+            alert(inputs[0].readOnly ? "تم قفل التعديل" : "يمكنك التعديل الآن");
+        }
+
+        function saveAsImage() {
+            html2canvas(document.body).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'AppleID_Info.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
